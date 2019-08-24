@@ -20,7 +20,7 @@ public class Main {
                     .userAgent("Chrome/4.0.249.0 Safari/532.5")
                     .referrer("http://www.google.com")
                     .get();
-            Elements listCars = doc.select("div.our-choice.clr");
+            Elements listCars = doc.select("div.cars-container");
             //save information in file.txt (temporarily)
             FileWriter writer = new FileWriter("Cars.txt");
 
