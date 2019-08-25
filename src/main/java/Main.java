@@ -4,14 +4,29 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 
 public class Main {
+    private String car;
     public static void main(String[] args) {
         new Main().go();
     }
     public void go(){
         parseMainPage();
+        try {
+            ServerSocket serverSocket = new ServerSocket(4242);
+            while (true){
+                Socket socket = serverSocket.accept();
+                PrintWriter writer = new PrintWriter(socket.getOutputStream());
+                writer.println(car);
+                writer.close();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
     }
     public void parseMainPage(){
@@ -26,6 +41,7 @@ public class Main {
 
             for(Element element : listCars.select("a")){
                 writer.write(element.text() + "\n");
+                car = element.text();
                 System.out.println(element.text());
             }
             writer.close();
